@@ -1,0 +1,50 @@
+6) Half Subtractor
+Implementation : 
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+entity half_sub is
+port( A, B : in std_logic;
+DIFF, Borrow : out std_logic);
+end entity;
+architecture dataflow of half_sub is
+begin
+DIFF <= A xor B;
+Borrow <= (not A) and B;
+end architecture
+Simulation : 
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+entity half_sub_tb is
+end entity;
+architecture tb of half_sub_tb is
+component half_sub is
+port( A, B : in std_logic;
+DIFF, Borrow : out std_logic);
+end component;
+signal A, B, DIFF, Borrow : std_logic;
+begin
+uut: half_sub port map(
+A => A, B => B,
+DIFF => DIFF,
+Borrow => Borrow);
+stim: process
+begin
+A <= '0';
+B <= '0';
+wait for 20 ns;
+A <= '0';
+B <= '1';
+wait for 20 ns;
+A <= '1';
+B <= '0';
+wait for 20 ns;
+A <= '1';
+B <= '1';
+wait for 20 ns;
+wait;
+end process;
+end tb
